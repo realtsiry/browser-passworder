@@ -3,19 +3,19 @@ var Unibabel = require('browserify-unibabel')
 module.exports = {
 
   // Simple encryption methods:
-  encrypt,
-  decrypt,
+  encrypt: encrypt,
+  decrypt: decrypt,
 
   // More advanced encryption methods:
-  keyFromPassword,
-  encryptWithKey,
-  decryptWithKey,
+  keyFromPassword: keyFromPassword,
+  encryptWithKey: encryptWithKey,
+  decryptWithKey: decryptWithKey,
 
   // Buffer <-> Hex string methods
-  serializeBufferForStorage,
-  serializeBufferFromStorage,
+  serializeBufferForStorage: serializeBufferForStorage,
+  serializeBufferFromStorage: serializeBufferFromStorage,
 
-  generateSalt,
+  generateSalt: generateSalt,
 }
 
 // Takes a Pojo, returns cypher text.
@@ -129,7 +129,8 @@ function unprefixedHex (num) {
   return hex
 }
 
-function generateSalt (byteCount = 32) {
+function generateSalt (byteCount) {
+  byteCount = byteCount ? byteCount : 32
   var view = new Uint8Array(byteCount)
   global.crypto.getRandomValues(view)
   var b64encoded = btoa(String.fromCharCode.apply(null, view))
