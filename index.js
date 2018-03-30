@@ -1,4 +1,5 @@
 var Unibabel = require('browserify-unibabel')
+var subtle = require('subtle')
 
 module.exports = {
 
@@ -36,7 +37,7 @@ function encryptWithKey (key, dataObj) {
   var data = JSON.stringify(dataObj)
   var dataBuffer = Unibabel.utf8ToBuffer(data)
   var vector = window.crypto.getRandomValues(new Uint8Array(16))
-  return window.crypto.subtle.encrypt({
+  return subtle.encrypt({
     name: 'AES-GCM',
     iv: vector,
   }, key, dataBuffer).then(function (buf) {
@@ -63,7 +64,7 @@ function decrypt (password, text) {
 function decryptWithKey (key, payload) {
   const encryptedData = Unibabel.base64ToBuffer(payload.data)
   const vector = Unibabel.base64ToBuffer(payload.iv)
-  return crypto.subtle.decrypt({name: 'AES-GCM', iv: vector}, key, encryptedData)
+  return subtle.decrypt({name: 'AES-GCM', iv: vector}, key, encryptedData)
   .then(function (result) {
     const decryptedData = new Uint8Array(result)
     const decryptedStr = Unibabel.bufferToUtf8(decryptedData)
@@ -79,7 +80,7 @@ function keyFromPassword (password, salt) {
   var passBuffer = Unibabel.utf8ToBuffer(password)
   var saltBuffer = Unibabel.base64ToBuffer(salt)
 
-  return window.crypto.subtle.importKey(
+  return subtle.importKey(
     'raw',
     passBuffer,
     { name: 'PBKDF2' },
@@ -87,7 +88,7 @@ function keyFromPassword (password, salt) {
     ['deriveBits', 'deriveKey']
   ).then(function (key) {
 
-    return window.crypto.subtle.deriveKey(
+    return subtle.deriveKey(
       { name: 'PBKDF2',
         salt: saltBuffer,
         iterations: 10000,
