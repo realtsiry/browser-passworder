@@ -35,8 +35,8 @@ function encrypt (password, dataObj) {
 function encryptWithKey (key, dataObj) {
   var data = JSON.stringify(dataObj)
   var dataBuffer = Unibabel.utf8ToBuffer(data)
-  var vector = global.crypto.getRandomValues(new Uint8Array(16))
-  return global.crypto.subtle.encrypt({
+  var vector = window.crypto.getRandomValues(new Uint8Array(16))
+  return window.crypto.subtle.encrypt({
     name: 'AES-GCM',
     iv: vector,
   }, key, dataBuffer).then(function (buf) {
@@ -79,7 +79,7 @@ function keyFromPassword (password, salt) {
   var passBuffer = Unibabel.utf8ToBuffer(password)
   var saltBuffer = Unibabel.base64ToBuffer(salt)
 
-  return global.crypto.subtle.importKey(
+  return window.crypto.subtle.importKey(
     'raw',
     passBuffer,
     { name: 'PBKDF2' },
@@ -87,7 +87,7 @@ function keyFromPassword (password, salt) {
     ['deriveBits', 'deriveKey']
   ).then(function (key) {
 
-    return global.crypto.subtle.deriveKey(
+    return window.crypto.subtle.deriveKey(
       { name: 'PBKDF2',
         salt: saltBuffer,
         iterations: 10000,
@@ -132,7 +132,7 @@ function unprefixedHex (num) {
 function generateSalt (byteCount) {
   byteCount = byteCount ? byteCount : 32
   var view = new Uint8Array(byteCount)
-  global.crypto.getRandomValues(view)
+  window.crypto.getRandomValues(view)
   var b64encoded = btoa(String.fromCharCode.apply(null, view))
   return b64encoded
 }
