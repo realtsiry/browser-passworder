@@ -11,13 +11,13 @@ Uses browser native crypto to be the lightest possible module you can have, with
 You need to have node.js installed.
 
 ```bash
-npm install browser-passworder
+npm install browser-passworder-js
 ```
 
 ## Usage
 
 ```javascript
-var passworder = require('browser-passworder')
+var passworder = require('browser-passworder-js')
 
 var secrets = { coolStuff: 'all', ssn: 'livin large' }
 var password = 'hunter55'
