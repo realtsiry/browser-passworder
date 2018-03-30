@@ -1,5 +1,5 @@
 {
-  "name": "@tsiry/browser-passworder",
+  "name": "browser-passworder-js",
   "version": "2.0.3",
   "description": "A simple browserifiable module for password-encrypting JS objects.",
   "main": "index.js",
