@@ -1,6 +1,6 @@
 {
   "name": "browser-passworder-js",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "A simple browserifiable module for password-encrypting JS objects.",
   "main": "index.js",
   "directories": {
